@@ -56,7 +56,7 @@ func downloadFile(args []string) {
 	if err == nil {
 		
 		// show error message
-		fmt.Printf("[err] : file %s already exists.. (did you try running this program already?)\n", downloadTo)
+		fmt.Printf("[ERROR] File \"%s\" already exists.. (did you try running this program already?)\n", downloadTo)
 		
 		// show traceback
 		panic(err)
@@ -70,7 +70,7 @@ func downloadFile(args []string) {
 	if err != nil {
 		
 		// show error message
-		fmt.Printf("[err] : error creating file %s.. (does it already exist?)\n", downloadTo)
+		fmt.Printf("[ERROR] Error creating file \"%s\".. (Does it already exist?)\n", downloadTo)
 		
 		// show traceback
 		panic(err)
@@ -87,7 +87,7 @@ func downloadFile(args []string) {
 	if err != nil {
 		
 		// show error message
-		fmt.Printf("[err] : error downloading from %s.. (is your internet working?)\n", args[0])
+		fmt.Printf("[ERROR] Error downloading from \"%s\".. (Are you connected to the Internet?)\n", args[0])
 		
 		// show traceback
 		panic(err)
@@ -104,7 +104,7 @@ func downloadFile(args []string) {
 	if err != nil {
 		
 		// show error message
-		fmt.Printf("[err] : error copying data from %s to %s.. (is %s in the working directory?)\n", args[0], downloadTo, downloadTo)
+		fmt.Printf("[ERROR] Error copying data from %s to %s.. (Is %s in the working directory?)\n", args[0], downloadTo, downloadTo)
 	
 		// show traceback
 		panic(err)
