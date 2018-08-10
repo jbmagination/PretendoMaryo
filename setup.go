@@ -35,7 +35,7 @@ func doCertGen(config string) {
 	clear()
 
 	// show a neat info snippet
-	fmt.Printf("- generating certificate and key pair...\n")
+	fmt.Printf("- Generating certificate and key pair...\n")
 
 	// create necissary directories for this
 
@@ -100,7 +100,7 @@ func doCertGen(config string) {
 	if err != nil {
 
 		// display error
-		fmt.Printf("[err]: error while generating key pair...\n")
+		fmt.Printf("[ERROR] Error while generating key pair...\n")
 		
 		// panic
 		panic(err)
@@ -118,7 +118,7 @@ func doCertGen(config string) {
 	if err != nil {
 		
 		// display error
-		fmt.Printf("[err]: error while generating certificate...\n")
+		fmt.Printf("[ERROR] Error while generating certificate...\n")
 	
 		// panic
 		panic(err)
@@ -128,20 +128,19 @@ func doCertGen(config string) {
 	// save private key
 	pkey := x509.MarshalPKCS1PrivateKey(privatekey)
 	ioutil.WriteFile("maryo-data/private-key.pem", pkey, 0777)
-	fmt.Printf("private key saved...\n")
+	fmt.Printf("Private key saved...\n")
 
-	// save public key
-	pubkey, _ := x509.MarshalPKIXPublicKey(publickey)
+	// save public key	pubkey, _ := x509.MarshalPKIXPublicKey(publickey)
 	ioutil.WriteFile("maryo-data/public-key.pem", pubkey, 0777)
-	fmt.Printf("public key saved...\n")
+	fmt.Printf("Public key saved...\n")
 
 	// save cert
 	ioutil.WriteFile("maryo-data/cert.pem", cert, 0777)
-	fmt.Printf("certificate saved...\n")
+	fmt.Printf("Certificate saved...\n")
 
 	// then, say they were made
-	fmt.Printf("finished generating the cert and key pair...\n")
-	fmt.Printf("\npress enter to continue...\n")
+	fmt.Printf("Finished generating the certificate and key pair...\n")
+	fmt.Printf("\nPress [ENTER] or [RETURN] to continue...\n")
 	_ = input("")
 
 	// then ask if they would like to enable https
@@ -153,7 +152,7 @@ func doCertGen(config string) {
 		clear()
 
 		// display the message
-		fmt.Printf("would you like to enable https on the server?\n")
+		fmt.Printf("Would you like to enable HTTPS on the server?\n")
 		fmt.Printf("-> (y|n)\n")
 		enableHTTPS = input(": ")
 		
@@ -167,7 +166,7 @@ func doCertGen(config string) {
 		} else {
 			
 			// show a message showing valid options
-			fmt.Printf("-> please enter y or n\n")
+			fmt.Printf("-> Please enter y or n\n")
 			
 			// stop the event loop to give them time to read
 			time.Sleep(1500 * time.Millisecond)
@@ -184,11 +183,11 @@ func doCertGen(config string) {
 
 		// if it doesn't exist
 		// send a message
-		fmt.Printf("[err]: there is no config at %s...\n", config)
-		fmt.Printf("       please generate one by passing the setup flag\n")
-		fmt.Printf("       when running maryo. or, maryo may detect that one has\n")
-		fmt.Printf("       has not been created. or, you can just pass the path\n")
-		fmt.Printf("       to one...\n")
+		fmt.Printf("[ERROR] There is no config at %s...\n", config)
+		fmt.Printf("       Please generate one by passing the setup flag\n")
+		fmt.Printf("       when running Maryo. Otherwise, maryo may detect that\n")
+		fmt.Printf("       one has not been created, or you can just pass the\n")
+		fmt.Printf("       path to a file..\n")
 
 		// exit
 		os.Exit(1)
@@ -199,9 +198,9 @@ func doCertGen(config string) {
 	if !checkJSONValidity(config) {
 
 		// send a message
-		fmt.Printf("[err]: your config at %s is invalid...\n", config)
-		fmt.Printf("       please regenerate it and fix it, which the former\n")
-		fmt.Printf("       can be done by setting up maryo again...\n")
+		fmt.Printf("[ERROR] Your config at %s is invalid...\n", config)
+		fmt.Printf("       Please regenerate it and fix it, which\n")
+		fmt.Printf("       can be done by setting up Maryo again...\n")
 
 		// exit
 		os.Exit(1)
@@ -228,8 +227,8 @@ func doCertGen(config string) {
 	writeJSONFile(config, configData)
 
 	// let the user know it's done, and exit on enter
-	fmt.Printf("finished modifying the config...\n")
-	fmt.Printf("press enter to continue...\n")
+	fmt.Printf("Finished modifying the config...\n")
+	fmt.Printf("Press [ENTER] or [RETURN] to continue...\n")
 	_ = input("")
 
 }
@@ -243,15 +242,15 @@ func generateRomFSPatch(encryptionKeyPath string) {
 	// and the keys
 
 	// alert about it
-	fmt.Printf("checking for files...\n")
+	fmt.Printf("Checking for files...\n")
 
 	// directory checking
 	if !doesDirExist("maryo-data") {
 
 		// warn the user
-		fmt.Printf("[err]: the maryo-data directory does not exist...\n")
-		fmt.Printf("       please generate it by going through setup again\n")
-		fmt.Printf("       or by passing the regencerts flag when running maryo.\n")
+		fmt.Printf("[ERROR] The \"maryo-data\" directory does not exist...\n")
+		fmt.Printf("       Please generate it by either going through setup again\n")
+		fmt.Printf("       or by passing the --regencerts flag when running Maryo.\n")
 
 		// exit
 		os.Exit(1)
@@ -274,10 +273,10 @@ func generateRomFSPatch(encryptionKeyPath string) {
         if fileStatus == false {
 
 			// if it doesn't, then exit
-			fmt.Printf("[err]: one of the required files in the maryo-data\n")
-			fmt.Printf("       directory is nonexistent. please regenerate it\n")
-			fmt.Printf("       by going through setup again or passing the regencerts\n")
-			fmt.Printf("       flag when running maryo again...\n")
+			fmt.Printf("[ERROR] One of the required files in the \"maryo-data\"\n")
+			fmt.Printf("       directory is nonexistent. Please regenerate it either\n")
+			fmt.Printf("       by going through setup again or passing the --regencerts\n")
+			fmt.Printf("       flag when running Maryo again...\n")
 
 			// exit
 			os.Exit(1)
@@ -292,7 +291,7 @@ func generateRomFSPatch(encryptionKeyPath string) {
 
 		// if it doesn't
 		fmt.Printf("[err]: slot key 0x0D not found in maryo-data...\n")
-		fmt.Printf("       please dm me for my magnet link, torrent it,\n")
+		fmt.Printf("       please DM me for my magnet link, torrent it,\n")
 		fmt.Printf("       and place it in the maryo-data directory as 0x0D.key...\n")
 
 		// exit
