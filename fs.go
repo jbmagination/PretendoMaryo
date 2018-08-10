@@ -31,7 +31,7 @@ func makeDirectory(directory string) {
 	if err != nil {
 
 		// show error message
-		fmt.Printf("[err]: error while creating directory (does it already exist?)")
+		fmt.Printf("[ERROR] Error while creating directory (Does it already exist?)")
 
 		// show traceback
 		panic(err)
@@ -84,7 +84,7 @@ func createFile(file string) {
 	if doesFileExist(file) == true {
 
 		// display something if it already does
-		fmt.Printf("[err] : %s already exists..", file)
+		fmt.Printf("[ERROR] File \"%s\" already exists..", file)
 
 		// then exit the program because you should already know if it does
 		os.Exit(1)
@@ -98,7 +98,7 @@ func createFile(file string) {
 	if err != nil {
 
 		// display an error message
-		fmt.Printf("[err] : error creating file %s.. (does it already exist?)\n", file)
+		fmt.Printf("[ERROR] Error creating file \"%s\".. (Does it already exist?)\n", file)
 
 		// close the file stream
 		defer oput.Close()
@@ -123,7 +123,7 @@ func readFileByte(file string) []byte {
 	if err != nil {
 
 		// display error message
-		fmt.Printf("[err] : error reading file %s.. (does it exist?)\n", file)
+		fmt.Printf("[ERROR] Error reading file \"%s\".. (does it exist?)\n", file)
 
 		// show traceback
 		panic(err)
@@ -159,7 +159,7 @@ func deleteFile(file string) {
 	if err != nil {
 
 		// show error message
-		fmt.Printf("[err] : error deleting file %s..", file)
+		fmt.Printf("[ERROR] Error deleting file \"%s\"..", file)
 
 		// show traceback
 		panic(err)
@@ -181,7 +181,7 @@ func writeFile(file string, data string) {
 	if err != nil {
 
 		// show error message
-		fmt.Printf("[err] : error writing to file %s.. (does it exist?)\n", file)
+		fmt.Printf("[ERROR] Error writing to file \"%s\".. (does it exist?)\n", file)
 
 		// show traceback
 		panic(err)
@@ -200,7 +200,7 @@ func writeByteToFile(file string, data []byte) {
 	if err != nil {
 
 		// show error message
-		fmt.Printf("[err] : error writing to file %s.. (does it exist?)\n", file)
+		fmt.Printf("[ERROR] Error writing to file \"%s\".. (does it exist?)\n", file)
 
 		// show traceback
 		panic(err)
@@ -250,7 +250,7 @@ func readJSONFile(file string) map[string]interface{} {
 	if err != nil {
 
 		// show error message
-		fmt.Printf("[err] : error converting raw JSON to valid golang item from %s.. (is this valid JSON?)\n", file)
+		fmt.Printf("[ERROR] Error converting raw JSON to valid golang item from \"%s\".. (Is this valid JSON?)\n", file)
 
 		// show traceback
 		panic(err)
@@ -272,7 +272,7 @@ func writeJSONFile(file string, data map[string]interface{}) {
 	if err != nil {
 
 		// show error message
-		fmt.Printf("[err] : error while converting a golang map into JSON. (how did this even happen)\n")
+		fmt.Printf("[ERROR] Error while converting a golang map into JSON. (How did this even happen?)\n")
 
 		// show traceback
 		panic(err)
