@@ -23,14 +23,14 @@ func main() {
 	consoleSequence(fmt.Sprintf("%s", code("reset")))
 
 	// parse some flags here
-	config := flag.String("config", "maryo-data/config.json", "value for config file path (default is maryo/config.json)")
-	logging := flag.Bool("logging", false, "if set, the proxy will log all request data (only needed for debugging)")
-	doSetup := flag.Bool("setup", false, "if set, maryo will go through setup again")
-	generateCerts := flag.Bool("regencerts", false, "if set, maryo will generate self-signed certificates for private use")
+	config := flag.String("config", "maryo-data/config.json", "Value for config file path. (Default is maryo/config.json)")
+	logging := flag.Bool("logging", false, "If set, the proxy will log all request data. (Only needed for debugging)")
+	doSetup := flag.Bool("setup", false, "If set, Maryo will go through setup again.")
+	generateCerts := flag.Bool("regencerts", false, "If set, Maryo will generate self-signed certificates for private use.")
 	flag.Parse()
 
 	// set window title
-	ttitle("maryo")
+	ttitle("Maryo Proxy")
 
 	// generate the certs if needed
 	if *generateCerts == true {
@@ -42,8 +42,8 @@ func main() {
 		clear()
 
 		// give the user a message
-		fmt.Printf("your certificate and key pair have been generated\n")
-		fmt.Printf("reload the program to use them.\n")
+		fmt.Printf("Your certificate and key pair have been generated!\n")
+		fmt.Printf("Reload the program to use them.\n")
 
 		// close the program
 		os.Exit(0)
@@ -114,22 +114,22 @@ func main() {
 		} else if fileMap["config"] == "iv" {
 
 			// i'm not just going to perform autosetup because they might have some stuff in there
-			fmt.Printf("your config is invalid.\n")
-			fmt.Printf("you have three different options:\n")
-			fmt.Printf(" 1. run this program with the --setup flag\n")
-			fmt.Printf(" 2. delete the config and run this program\n")
-			fmt.Printf(" 3. fix the config\n")
+			fmt.Printf("Your config is invalid.\n")
+			fmt.Printf("You have three different options:\n")
+			fmt.Printf(" 1. Run this program with the --setup flag\n")
+			fmt.Printf(" 2. Delete the config and run this program\n")
+			fmt.Printf(" 3. Fix the config\n")
 			os.Exit(1)
 
 		// if the certificates don't exist
 		} else if fileMap["cert"] == "ne" {
 
 			// i'm not going to force you to set it up again
-			fmt.Printf("you don't have any certs in the maryo-data folder\n")
-			fmt.Printf("you have three different options:\n")
-			fmt.Printf(" 1. run this program with the --regencerts flag\n")
-			fmt.Printf(" 2. run this program with the --setup flag\n")
-			fmt.Printf(" 3. provide your own certs\n")
+			fmt.Printf("You don't have any certs in the maryo-data folder\n")
+			fmt.Printf("You have three different options:\n")
+			fmt.Printf(" 1. Run this program with the --regencerts flag\n")
+			fmt.Printf(" 2. Run this program with the --setup flag\n")
+			fmt.Printf(" 3. Provide your own certs\n")
 			os.Exit(1)
 
 		// otherwise, start the proxy
