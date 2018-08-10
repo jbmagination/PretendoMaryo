@@ -31,7 +31,7 @@ var config map[string]interface{}
 func startProxy(configName string, logging bool) {
 
 	// set the terminal title
-	ttitle("maryo -> proxy")
+	ttitle("Maryo -> Proxy")
 
 	// get the config data
 	config = readJSONFile(configName)
@@ -49,16 +49,16 @@ func startProxy(configName string, logging bool) {
 
 	// write current timestamp to log
 	t := time.Now().Format("20060102150405")
-	writeFile("maryo-data/proxy.log", fmt.Sprintf("-> started log [%s]\n", t))
+	writeFile("maryo-data/proxy.log", fmt.Sprintf("-> Started log [%s]\n", t))
 
 	// get ip
 	ip := getIP()
 
 	// start the console log
 	fmt.Printf("-- proxy log --\n")
-	consoleSequence(fmt.Sprintf("-> local IP address is %s%s%s\n", code("green"), ip, code("reset")))
-	consoleSequence(fmt.Sprintf("-> hosting proxy on %s:9437%s\n", code("green"), code("reset")))
-	writeFile("maryo-data/proxy.log", fmt.Sprintf("-> got local ip as %s, hosting on port :9437", ip))
+	consoleSequence(fmt.Sprintf("-> Local IP address is %s%s%s\n", code("green"), ip, code("reset")))
+	consoleSequence(fmt.Sprintf("-> Hosting proxy on %s:9437%s\n", code("green"), code("reset")))
+	writeFile("maryo-data/proxy.log", fmt.Sprintf("-> Got local IP as %s, hosting on port :9437", ip))
 
 	// load that proxy
 	proxy := goproxy.NewProxyHttpServer()
@@ -84,8 +84,8 @@ func startProxy(configName string, logging bool) {
 		func(r *http.Request, ctx *goproxy.ProxyCtx) (*http.Request, *http.Response) {
 
 			// log the request
-			consoleSequence(fmt.Sprintf("-> request to %s%s%s\n", code("green"), r.URL.Host, code("reset")))
-			writeFile("maryo-data/proxy.log", fmt.Sprintf("-> got request to %s\n", r.URL.Host))
+			consoleSequence(fmt.Sprintf("-> Request to %s%s%s\n", code("green"), r.URL.Host, code("reset")))
+			writeFile("maryo-data/proxy.log", fmt.Sprintf("-> Got request to %s\n", r.URL.Host))
 
 			// get prettified request
 			
@@ -109,7 +109,7 @@ func startProxy(configName string, logging bool) {
 			if err != nil {
 				
 				// output error
-				fmt.Printf("[err]: error occurred while dumping http request\n")
+				fmt.Printf("[ERROR] Error occurred while dumping HTTP request\n")
 				fmt.Printf("%s\n", err.Error())
 	
 			}
@@ -125,7 +125,7 @@ func startProxy(configName string, logging bool) {
 			}
 
 			// always log to file
-			writeFile("maryo-data/proxy.log", fmt.Sprintf("-> request data to %s\n", r.URL.Host))
+			writeFile("maryo-data/proxy.log", fmt.Sprintf("-> Request data to %s\n", r.URL.Host))
 			writeFile("maryo-data/proxy.log", fmt.Sprintf("%s", string(reqData[:])))
 			writeFile("maryo-data/proxy.log", fmt.Sprintf("\n\n"))
 
@@ -142,7 +142,7 @@ func startProxy(configName string, logging bool) {
 					if r.URL.Scheme == "https" {
 
 						// let the user know
-						fmt.Printf("-> switching protocol to http\n")
+						fmt.Printf("-> Switching protocol to HTTP\n")
 
 						// set it to HTTP
 						r.URL.Scheme = "http"
@@ -152,8 +152,8 @@ func startProxy(configName string, logging bool) {
 				}
 
 				// log the redirect
-				consoleSequence(fmt.Sprintf("-> proxying %s%s%s to %s%s%s\n", code("green"), r.URL.Host, code("reset"), code("green"), redirTo, code("reset")))
-				writeFile("maryo-data/proxy.log", fmt.Sprintf("-> proxying %s to %s", r.URL.Host, redirTo))
+				consoleSequence(fmt.Sprintf("-> Proxying %s%s%s to %s%s%s\n", code("green"), r.URL.Host, code("reset"), code("green"), redirTo, code("reset")))
+				writeFile("maryo-data/proxy.log", fmt.Sprintf("-> Proxying %s to %s", r.URL.Host, redirTo))
 
 				// redirect it
 				r.URL.Host = redirTo
@@ -164,7 +164,7 @@ func startProxy(configName string, logging bool) {
 			if r.Method == "POST" {
 
 				// show the user that we performed a POST request
-				fmt.Printf("-> performing %s request to %s%s://%s%s%s\n", r.Method, code("green"), r.URL.Scheme, r.URL.Host, r.URL.Path, code("reset"))
+				fmt.Printf("-> Performing %s request to %s%s://%s%s%s\n", r.Method, code("green"), r.URL.Scheme, r.URL.Host, r.URL.Path, code("reset"))
 
 				// clone the request
 				newReq := cloneReq(r)
@@ -176,7 +176,7 @@ func startProxy(configName string, logging bool) {
 				if err != nil {
 					
 					// return a response
-					return r, goproxy.NewResponse(newReq, goproxy.ContentTypeText, http.StatusBadGateway, strings.Join([]string{"no worries, this is an error in maryo\n", err.Error()}, ""))
+					return r, goproxy.NewResponse(newReq, goproxy.ContentTypeText, http.StatusBadGateway, strings.Join([]string{"No worries, this is an error in Maryo\n", err.Error()}, ""))
 
 				}
 				
@@ -202,7 +202,7 @@ func startProxy(configName string, logging bool) {
 				if err != nil {
 					
 					// log the error
-					fmt.Printf("[err]: error while dumping response")
+					fmt.Printf("[ERROR] Error while dumping response")
 					fmt.Printf("%s\n", err.Error())
 					
 				}
@@ -211,7 +211,7 @@ func startProxy(configName string, logging bool) {
 				if logging == true {
 					
 					// log it if they do
-					fmt.Printf("\n-- response data\n")
+					fmt.Printf("\n-- Response data\n")
 					fmt.Printf("%s\n", string(fmtResp[:]))
 					fmt.Printf("\n\n")
 					
